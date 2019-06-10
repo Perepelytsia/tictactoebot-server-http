@@ -1,0 +1,12 @@
+[Unit]
+Description=uWSGI instance to serve tictactoebot
+After=network.target
+
+[Service]
+User=alex
+Group=www-data
+WorkingDirectory=/www/tictactoebot
+ExecStart=/usr/local/bin/uwsgi --emperor --ini tictactoebot.ini
+
+[Install]
+WantedBy=multi-user.target
