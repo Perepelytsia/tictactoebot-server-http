@@ -1,6 +1,9 @@
 import json
+import logic
 
 def application(env, start_response):
+
+    choose = 9
 
     if env['REQUEST_METHOD'] == 'POST':
 
@@ -11,13 +14,26 @@ def application(env, start_response):
             request_body_size = 0
         
         request_body = env['wsgi.input'].read(request_body_size)
-        data = json.loads(request_body)
-        l = json.dumps(data)
-        handle = open("log", "w")
-        handle.write(l)
-        handle.close()
+        command = json.loads(request_body)
+
+        if command['cmd'] == 'moveResponse':
+            
+            handle = open("commands.log", "a")
+            handle.write(request_body.decode('utf-8'))
+            handle.write("\n")
+            handle.close()
+
+            data = command['data']
+            choose = logic.do(data)
+
+    choose = str(choose)
+    response = '{"cmd":"moveRequest", "owner":"bot", "data":{"choose":'+choose+'}}'
+
+    handle = open("commands.log", "a")
+    handle.write(response)
+    handle.write("\n")
+    handle.close()
 
     start_response('200 OK', [('Content-Type','application/json')])
-    test = '{"ret":some}'
-    test = test.encode('utf-8')
-    return [test]
+    response = response.encode('utf-8')
+    return [response]
