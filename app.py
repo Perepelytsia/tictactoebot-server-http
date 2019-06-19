@@ -16,7 +16,7 @@ def application(env, start_response):
         request_body = env['wsgi.input'].read(request_body_size)
         command = json.loads(request_body)
 
-        if command['cmd'] == 'moveResponse':
+        if command['cmd'] == 'state':
             
             handle = open("commands.log", "a")
             handle.write(request_body.decode('utf-8'))
@@ -27,7 +27,7 @@ def application(env, start_response):
             choose = logic.do(data)
 
     choose = str(choose)
-    response = '{"cmd":"moveRequest", "owner":"bot", "data":{"choose":'+choose+'}}'
+    response = '{"cmd":"move", "owner":"bot", "data":{"choose":'+choose+'}}'
 
     handle = open("commands.log", "a")
     handle.write(response)

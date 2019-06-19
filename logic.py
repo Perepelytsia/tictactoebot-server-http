@@ -32,7 +32,7 @@ def do(data: dict) -> int:
         o = calc.get(newPositionsOpponent)
         #print(u)
         #print(o)
-        calculate = u + o
+        calculate = u + o * 0.8
         if maxCalc < calculate:
             #print("ADD")
             choose = positionFree
