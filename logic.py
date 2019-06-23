@@ -3,7 +3,7 @@ import calc
 def do(data: dict) -> int:
 
     field  = data['field']
-    active = data['active']
+    chip = data['chip']
 
     positionsUser     = list() 
     positionsOpponent = list() 
@@ -11,7 +11,7 @@ def do(data: dict) -> int:
 
     i = 0
     for value in field:
-        if value == active:
+        if value == chip:
             positionsUser.append(i)
         elif value == 0:
             positionsFree.append(i)
